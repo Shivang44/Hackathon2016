@@ -20,32 +20,7 @@ server.register(require('inert'), (err) => {
 
 
 // Add the route
-server.route([
-  {
-        method: 'GET',
-        path: '/public/{param*}',
-        handler: {
-            directory: {
-                path: 'public/'
-            }
-        }
-  },
-  
-  {
-    method: 'GET',
-    path:'/', 
-    handler: function (request, reply) {
-      reply.file('views/index.html');
-    }
-  }, 
-  {
-    method: 'GET',
-    path:'/view', 
-    handler: function (request, reply) {
-      reply.file('views/view.html');
-    }
-  }
-]);
+server.route(require('./routes.js'));
 
 
 
