@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Access it!</title>
+
+  <!-- For slider, load first -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+	<!-- CSS file for dashboard -->
+	<link rel="stylesheet" href="/public/dashboard.css">
+
+	<!-- Latest compiled and minified Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- Latest FontAwesome CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom Google Fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+
+	<!-- Theme CSS file from StartBootrap -->
+	<link href="/public/theme.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom CSS file -->
+	<link href="/public/custom.css" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+  <style>
+  body {
+    
+  }
+    .sidebar {
+      border-right: 1px solid #c4c2c2;
+    }
+    .navbar-inverse {
+      background-color: #91AA9D;
+      border-color: #91AA9D;
+    }
+    .row {
+          margin-top: 30px;
+    }
+    .headerText {
+      color: white;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+    .mapDiv{
+      display: none;
+      height: 350px;
+      width: 350px;
+    }
+    .addAReview, .addAReview a:hover {
+      font-size: 100%;
+      color: white;
+    }
+    .reviews {
+      display: none;
+    }
+  </style>
+		
+</head>
+  
+<body>
+  
+	<!-- Main navigation -->
+
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         <a class="headerText" href="/"><h1 style="padding: 0px">Access it!</h1></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/add" id="addReview" class="addAReview">Add review</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>  
+	
+
+    <div class="container-fluid">
+      <div class="row">
+				<div class="col-xs-1 col-sm-2 col-md-2 nav-sidebar">
+          <ul class="Filters" style="list-style: none;">
+            
+            <li class="active"><h2>Filter Results</h2></li>
+            
+            <label for="slider-1">Distance To Public Transportation:</label>
+            <input class="dtp" type="range" name="sliderTransportation" id="slider-1" value="1" min="1" max="5" />
+              
+            <label for="slider-2">Disability Parking:</label>
+            <input class="park" type="range" name="sliderParking" id="slider-1" value="1" min="1" max="5" />
+            
+            <label for="slider-3">Accesibility to ramps:</label>
+            <input class="ramps" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+            
+            <label for="slider-4">Table Height:</label>
+            <input class="tableheight" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+            
+            <label for="slider-5">Water Fountain Height:</label>
+            <input class="fountainheight" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+            
+            <label for="slider-6">Bathroom Accesibility:</label>
+            <input class="bathroomacc" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+            
+            <label for="slider-7">Door Width:</label>
+            <input class="doorwidth" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+              
+            <label for="slider-8">Brail Accesibility:</label>
+            <input class="rail" type="range" name="slider-1" id="slider-1" value="1" min="1" max="5" />
+          
+          </ul>
+        </div>
+        
+  			<div class="col-xs-11 col-sm-8 col-md-10 main">
+          <h2 class="sub-header" style="margin-top: 0px;">Locations</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Venue</th>
+                  <th style="width:25%;">Address</th>
+                  <th>Parking</th>
+                  <th>Distance to public transportation</th>
+                  <th>Ramp</th>
+                  <th>Table height</th>
+                  <th>Water fountain height</th>
+                  <th>Bathroom accessibility</th>
+                  <th>Door widths</th>
+                  <th>Braille</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each data }}
+                  <tr>
+                    <td>{{ this.name }} </td>
+                    <td data-resized="false">
+                      <span class="spanAddress">{{ this.address }}</span>  <div class="mapDiv"></div>
+                      <div class="col-md-6 reviews reviews">
+                        <h3>Reviews</h3>
+                        {{#if this.reviews }}
+                            {{ this.reviews }}
+                        {{/if}}
+                      </div>
+                    </td>
+                    <td class="nToStar">{{ this.parking }}</td>
+                    <td class="nToStar">{{ this.dtp }}</td>
+                    <td class="nToStar">{{ this.ramp }}</td>
+                    <td class="nToStar">{{ this.tableheight }}</td>
+                    <td class="nToStar">{{ this.waterheight }}</td>
+                    <td class="nToStar">{{ this.bathacc }}</td>
+                    <td class="nToStar">{{ this.doorwidth }}</td>
+                    <td class="nToStar">{{ this.rail }}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+	<!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Latest jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
+	<!-- Legacy jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  
+	<!-- Custom JS file -->
+	<script src="/public/index.js"></script>
+	
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD8BhD-We6Sh7OVhsl4wh1Rma0wZ8-0-8"></script>
+
+
+
+
+<script>
+  // MAPS API
+  function initMap(mapId, address) {
+  var map = new google.maps.Map(mapId, {
+    zoom: 16,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  var geocoder = new google.maps.Geocoder();
+  geocodeAddress(geocoder, map, address);
+
+
+}
+
+function geocodeAddress(geocoder, resultsMap, address) {
+  console.log("address geo", address);
+  geocoder.geocode({'address': address}, function(results, status) { 
+    if (status === 'OK') {
+      resultsMap.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+</script>
+
+
+
+
+
+	<!-- Custom JavaScript from StartBootrap template -->
+	<script>
+	// Closes the sidebar menu
+	$("#menu-close").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
+	// Opens the sidebar menu
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
+	// Scrolls to the selected menu item on the page
+	$(function() {
+		$('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if (target.length) {
+					$('html,body').animate({
+						scrollTop: target.offset().top
+					}, 1000);
+					return false;
+				}
+			}
+		});
+	});
+	//#to-top button appears after scrolling
+	var fixed = false;
+	$(document).scroll(function() {
+		if ($(this).scrollTop() > 250) {
+			if (!fixed) {
+				fixed = true;
+				// $('#to-top').css({position:'fixed', display:'block'});
+				$('#to-top').show("slow", function() {
+					$('#to-top').css({
+						position: 'fixed',
+						display: 'block'
+					});
+				});
+			}
+		} else {
+			if (fixed) {
+				fixed = false;
+				$('#to-top').hide("slow", function() {
+					$('#to-top').css({
+						display: 'none'
+					});
+				});
+			}
+		}
+	});
+	// Disable Google Maps scrolling
+	// See http://stackoverflow.com/a/25904582/1607849
+	// Disable scroll zooming and bind back the click event
+	var onMapMouseleaveHandler = function(event) {
+		var that = $(this);
+		that.on('click', onMapClickHandler);
+		that.off('mouseleave', onMapMouseleaveHandler);
+		that.find('iframe').css("pointer-events", "none");
+	}
+	var onMapClickHandler = function(event) {
+			var that = $(this);
+			// Disable the click handler until the user leaves the map area
+			that.off('click', onMapClickHandler);
+			// Enable scrolling zoom
+			that.find('iframe').css("pointer-events", "auto");
+			// Handle the mouse leave event
+			that.on('mouseleave', onMapMouseleaveHandler);
+		}
+		// Enable map zooming with mouse scroll when the user clicks the map
+	$('.map').on('click', onMapClickHandler);
+	
+
+	
+	
+	
+	// Replace numbers with stars
+	function updateToStars() {
+	  	$('.nToStar').each(function(i) {
+  	  var n = parseInt($(this).text());
+  	  $(this).text('');
+  	  for (var i = 0; i < n; i++) {
+  	    $(this).append('<i class="fa fa-star" aria-hidden="true"></i>');
+  	  }
+  	});
+	}
+	
+	function dropDownAttach() {
+	  
+    $('td').click(function(){
+      // Get map child
+      var mapChild = $(this).children()[1];
+      var address = $(this).children()[0].innerText;
+      var reviews = $(this).children()[2];
+      
+      
+      var height = $(this).height();
+      if (!$(this).data('resized')) {
+         $(this).data('iHeight', height);
+         $(this).animate({
+            height: "500px"
+          }, 700, function() {
+              mapChild.style.display = "block";
+              initMap(mapChild, address);
+              reviews.style.display = "block";
+             // $('.reviews').show();
+          });
+      } else {
+          mapChild.style.display = "none";
+          reviews.style.display =
+         // $('.reviews').hide();
+          $(this).animate({
+          height: $(this).data('iHeight')
+          }, 700, function() {
+            
+          });
+      }
+
+      $(this).data('resized', !$(this).data('resized'));
+    });
+	}
+	
+	updateToStars();
+	dropDownAttach();
+
+	</script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      
+      
+      
+     /* $('.ui-slider').change(function() {
+        console.log('sent to server');
+        // Send ajax request
+
+      });*/
+      
+      $('.ui-slider').on("input change", function() {
+        var dtp = $('.dtp').val();
+        var park = $('.park').val();
+        var ramps = $('.ramps').val();
+        var tableheight = $('.tableheight').val();
+        var bathroomacc = $('.bathroomacc').val();
+        var doorwidth = $('.doorwidth').val();
+        var rail = $('.rail').val();
+        var waterheight = $('.fountainheight').val();
+
+        // REQUESTING NEW DATA
+        $.ajax({
+          url: '/view',
+          method: 'POST',
+          data: {
+            dtp: dtp,
+            parking: park,
+            ramp: ramps,
+            tableheight: tableheight,
+            waterheight: waterheight,
+            bathacc: bathroomacc,
+            doorwidth: doorwidth,
+            rail: rail,
+            type: "{{ type }}",
+            {{#if zipCode }}
+            location:  {{ zipCode }}
+            {{/if}}
+          }
+        }).done(function(msg) {
+          // UPDATE our results
+          // Order:
+          /*
+          * name
+          * address
+          * parking
+          * dtp
+          * ramp
+          * table height
+          *  water foundtain height
+          * bathroom accessibility
+          * door widths
+          * braille
+          */
+          var data = JSON.parse(msg);
+          console.log(data);
+          $('tbody').html('');
+          for (var i = 0; i < data.length; i++) {
+            var tdString = "<tr><td>" + data[i].name + "</td>"
+            + "<td>" + data[i].address + "</td>" + "<td class='nToStar'>" + data[i].parking + "</td>" +
+            "<td class='nToStar'>" + data[i].dtp + "</td>"+"<td class='nToStar'>" + data[i].ramp + "</td>"+
+            "<td class='nToStar'>" + data[i].tableheight + "</td>"+"<td class='nToStar'>" + data[i].waterheight + "</td>"+
+            "<td class='nToStar'>" + data[i].bathacc + "</td>"+"<td class='nToStar'>" + data[i].doorwidth + "</td>"+
+            "<td class='nToStar'>" + data[i].rail + "</td></tr>";
+            
+          
+            $('tbody').append(tdString);
+          
+          }
+          
+          // change all number to stars
+          updateToStars();
+          dropDownAttach();
+        });
+
+      });
+    });
+    
+    
+    
+    $('.headerText').click(function(e){
+      e.preventDefault();
+      window.location = "/";
+    });
+    
+    $('.addAReview').click(function(e) {
+      e.preventDefault();
+      window.location = "/add";
+    });
+    
+  </script>
+  <script></script>
+
+
+</body>
+
+</html>

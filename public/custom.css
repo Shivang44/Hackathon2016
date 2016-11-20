@@ -1,0 +1,94 @@
+/* 
+    white: #fcfff5
+    slate: #d1dddd
+    blue-green: #91aa9d
+    lighter-blue: #3e606f
+    darker-blue: #193441
+    
+*/
+
+body {
+  font-family: 'Dosis', sans-serif;
+  font-size: 12pt;
+  background-color: #fcfff5;
+  color: #193441;
+}
+.header {
+  background: url(https://cdn.hyperdev.com/610021c4-a257-4e6b-90b2-2bdc03382355%2FColumbus-ohio-skyline-panorama.jpg) no-repeat center center scroll;
+}
+.well {
+	background-color: #fcfff5;
+	border-radius: 15px;
+	font-size: 150%;
+	margin: 10%;
+	color: #193441;
+}
+.container-fluid {
+  padding: 10px;
+}
+.container {
+  border-radius: 15px;
+}
+.aboutHead {
+  text-decoration: underline;
+}
+
+.aboutList {
+  text-align: left;
+}
+
+.form-groups {
+  text-align: center;
+}
+
+.bg-primary {
+  background-color: #91aa9d;
+  color: #fcfff5;
+}
+.text-primary {
+  color: #91aa9d;
+}
+.bg-secondary {
+  background-color: #fcfff5;
+  color: #193441;
+}
+
+.btn-dark {
+    color: #fcfff5;
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fcfff5;
+}
+
+.btn-light {
+    color: #3e606f;
+}
+
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active {
+    color: #3e606f;
+}
+
+.btnAlign{
+  vertical-align: middle;
+}
+
+.photoSize {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.headerText {
+  font-size: 125%;
+  text-decoration: none;
+  color: white !important;
+}
+
+#addReview {
+  color: white !important;
+}
+
