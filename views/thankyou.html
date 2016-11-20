@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+  
+  <title>Thank you</title>
+    
+  <!-- Latest compiled and minified Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- Latest FontAwesome CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom Google Fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+
+	<!-- Theme CSS file from StartBootrap -->
+	<link href="/public/theme.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom CSS file -->
+	<link href="/public/custom.css" rel="stylesheet" type="text/css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css">
+  
+	<style>
+	  body {
+	    background-color: #91aa9d;
+	  }
+	  .centerAll {
+	    display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      }
+	  }
+	</style>
+
+</head>
+
+<body>
+  
+	<!-- Main navigation -->
+	<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+	<nav id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+			<li>
+				<a href="/#top" onclick=$("#menu-close").click();>Search</a>
+			</li>
+			<li>
+				<a href="/#about" onclick=$("#menu-close").click();>About us</a>
+			</li>
+			<li>
+				<a href="/#mission" onclick=$("#menu-close").click();>Our mission</a>
+			</li>
+			<li>
+				<a href="/add" onclick=$("#menu-close").click();>Add a review</a>
+			</li>
+			<li>
+			  <a href="/redeem" onclick=$("menu-close").click();>Redeem</a>
+			</li>
+		</ul>
+	</nav>  
+
+	<div class="container-fluid bg-primary">
+	  <div class="container bg-secondary">
+
+      <!-- Header -->
+  		<div class="row">
+  			<div class="col-xs-offset-4 col-xs-4 text-center" style="padding-top: 20px">
+  				<img src="https://cdn.hyperdev.com/610021c4-a257-4e6b-90b2-2bdc03382355%2Flogo.png" width="100%">
+  				<br />
+  				<br />
+  				  <h2>Thank you for your review! You have earned 5 points!</h2>
+  				  
+  				  
+  				  
+  			</div>
+  		</div>
+  		<div class="centerAll">
+  			<h2>Click below to find out how you can redeem gifts cards for you input!</h2>
+			  <a href="/redeem" onclick=$("menu-close").click(); style="font-size: 25px">Redeem</a>
+      </div>
+
+  		
+	  </div>
+	  
+  </div>
+	<!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Latest jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
+	<!-- Legacy jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  
+	<!-- Custom JS file -->
+	<script src="/public/index.js"></script>
+	
+	<!-- Pop-up notifications for points Toaster file-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+	<!-- Custom JavaScript from StartBootrap template -->
+	<script>
+	// Closes the sidebar menu
+	$("#menu-close").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
+	// Opens the sidebar menu
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
+	// Scrolls to the selected menu item on the page
+	$(function() {
+		$('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if (target.length) {
+					$('html,body').animate({
+						scrollTop: target.offset().top
+					}, 1000);
+					return false;
+				}
+			}
+		});
+	});
+	//#to-top button appears after scrolling
+	var fixed = false;
+	$(document).scroll(function() {
+		if ($(this).scrollTop() > 250) {
+			if (!fixed) {
+				fixed = true;
+				// $('#to-top').css({position:'fixed', display:'block'});
+				$('#to-top').show("slow", function() {
+					$('#to-top').css({
+						position: 'fixed',
+						display: 'block'
+					});
+				});
+			}
+		} else {
+			if (fixed) {
+				fixed = false;
+				$('#to-top').hide("slow", function() {
+					$('#to-top').css({
+						display: 'none'
+					});
+				});
+			}
+		}
+	});
+	// Disable Google Maps scrolling
+	// See http://stackoverflow.com/a/25904582/1607849
+	// Disable scroll zooming and bind back the click event
+	var onMapMouseleaveHandler = function(event) {
+		var that = $(this);
+		that.on('click', onMapClickHandler);
+		that.off('mouseleave', onMapMouseleaveHandler);
+		that.find('iframe').css("pointer-events", "none");
+	}
+	var onMapClickHandler = function(event) {
+			var that = $(this);
+			// Disable the click handler until the user leaves the map area
+			that.off('click', onMapClickHandler);
+			// Enable scrolling zoom
+			that.find('iframe').css("pointer-events", "auto");
+			// Handle the mouse leave event
+			that.on('mouseleave', onMapMouseleaveHandler);
+		}
+		// Enable map zooming with mouse scroll when the user clicks the map
+	$('.map').on('click', onMapClickHandler);
+	</script>
+  
+  <script>
+    toastr.success("Thanks for the review! You've earned 5 points!");
+  </script>
+</body>
+
+</html>
